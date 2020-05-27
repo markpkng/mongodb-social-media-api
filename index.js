@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const postRouter = require("./routes/postsRouter");
 
@@ -9,6 +10,12 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 
 app.use(cors());
+
+mongoose.connect("mongodb://localhost/rest-api-node", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
