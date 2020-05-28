@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const postRouter = require("./routes/postsRouter");
 
+const passportJWT = require("./middleware/passportJWT")();
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -18,6 +19,7 @@ mongoose.connect("mongodb://localhost/rest-api-node", {
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passportJWT.initialize());
 
 app.use("/api/post", postRouter);
 app.use(errorHandler);
