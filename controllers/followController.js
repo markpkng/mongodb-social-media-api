@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/userModel");
 
 exports.follow = async (req, res, next) => {
     try {
