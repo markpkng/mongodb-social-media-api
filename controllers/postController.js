@@ -34,3 +34,31 @@ exports.store = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.update = async (req, res, next) => {
+    try {
+        validaitonHandler(req);
+        let post = await Post.findById({
+            _id: req.params.id,
+        });
+        post.description = req.body.description;
+        post = await post.save();
+
+        res.send(post);
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.delete = async (req, res, next) => {
+    try {
+        let post = await Post.findById({
+            _id: req.params.id,
+        });
+        post = await post.delete();
+
+        res.send({ message: `Post successfully deleted.` });
+    } catch (err) {
+        next(err);
+    }
+};
