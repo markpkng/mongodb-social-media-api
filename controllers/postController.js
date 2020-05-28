@@ -3,7 +3,9 @@ const validaitonHandler = require("../validations/validationHandler");
 
 exports.index = async (req, res, next) => {
     try {
-        const posts = await Post.find()
+        const posts = await Post.find({
+            user: { $in: [...req.user.following, req.user.id] },
+        })
             .populate("user")
             .sort({ createdAt: -1 });
         res.send(posts);
@@ -16,6 +18,7 @@ exports.show = async (req, res, next) => {
     try {
         const post = await Post.findOne({
             _id: req.params.id,
+            $in: [...req.user.following, req.user.id],
         }).populate("user");
         res.send(post);
     } catch (err) {

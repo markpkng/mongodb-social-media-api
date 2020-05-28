@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const postRouter = require("./routes/postsRouter");
 const authRouter = require("./routes/authRouter");
+const followRouter = require("./routes/followRouter");
 
 const passportJWT = require("./middleware/passportJWT")();
 const errorHandler = require("./middleware/errorHandler");
@@ -24,6 +25,7 @@ app.use(passportJWT.initialize());
 
 app.use("/api/auth", authRouter);
 app.use("/api/post", passportJWT.authenticate(), postRouter);
+app.use("/api/follow", passportJWT.authenticate(), followRouter);
 app.use(errorHandler);
 
 app.listen(8000, () => {
