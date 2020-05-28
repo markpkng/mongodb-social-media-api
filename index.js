@@ -15,6 +15,15 @@ const app = express();
 
 app.use(cors());
 
+app.enable("trust proxy");
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
+
 mongoose.connect("mongodb://localhost/rest-api-node", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
